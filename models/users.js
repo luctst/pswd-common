@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+const { randomFillSync } = require("crypto");
 
 const UsersSchema = new Schema({
     name: {
@@ -7,7 +8,10 @@ const UsersSchema = new Schema({
     },
     familyName: {
         type: String,
-        required: true
+        required() {
+            if (this.isRootAdmin) return true;
+            return false;
+        }
     },
     mail: {
         type: String,
@@ -21,7 +25,10 @@ const UsersSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minlength: 8
+        minlength: 8,
+        default() {
+            return randomFillSync(Buffer.alloc(16)).toString('hex');
+        }
     },
     isRootAdmin: {
         type: Boolean,
@@ -37,6 +44,8 @@ const UsersSchema = new Schema({
             return false;
         }
     }
+}, {
+    timestamps: true,
 });
 
 module.exports = UsersSchema
