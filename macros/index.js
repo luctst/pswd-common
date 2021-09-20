@@ -2,8 +2,9 @@ module.exports = {
   back: {
     users: {
       projection: {
-        password: 0,
         __v: 0,
+        password: 0,
+        updatedAt: 0,
       },
     },
     mongoose: {
