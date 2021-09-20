@@ -15,9 +15,20 @@ module.exports = {
       ],
     },
   },
+  common: {
+    rights: {
+      0: 'admin',
+      1: 'write',
+      2: 'read',
+      3: 'writeAndRead',
+    },
+  },
   front: {
     vueRouterParams: {
       teamId: 'teamId',
+    },
+    vuexMutations: {
+      populateProfile: 'POPULATE_PROFILE',
     },
   },
 };
