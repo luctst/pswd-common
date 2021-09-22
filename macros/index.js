@@ -23,6 +23,11 @@ module.exports = {
       2: 'read',
       3: 'writeAndRead',
     },
+    gender: {
+      0: 'female',
+      1: 'male',
+      2: 'non-binary',
+    },
   },
   front: {
     vueRouterParams: {
