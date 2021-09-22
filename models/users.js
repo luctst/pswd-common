@@ -18,7 +18,7 @@ const UsersSchema = new Schema({
     gender: {
         type: Number,
         required: true,
-        enum: Object.keys(common.gender),
+        enum: Object.keys(common.gender).map(el => parseInt(el)),
     },
     mail: {
         type: String,
