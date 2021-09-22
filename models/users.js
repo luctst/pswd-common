@@ -1,6 +1,8 @@
 const { Schema } = require('mongoose');
 const { randomFillSync } = require("crypto");
 
+const { common } = require('../macros/index');
+
 const UsersSchema = new Schema({
     name: {
         type: String,
@@ -12,6 +14,11 @@ const UsersSchema = new Schema({
             if (this.isRootAdmin) return true;
             return false;
         }
+    },
+    gender: {
+        type: Number,
+        required: true,
+        enum: Object.keys(common.gender),
     },
     mail: {
         type: String,
@@ -30,19 +37,17 @@ const UsersSchema = new Schema({
             return randomFillSync(Buffer.alloc(16)).toString('hex');
         }
     },
-    isRootAdmin: {
+    isNew: {
         type: Boolean,
-        default() {
-            if (this.mail) return true;
-            return false;
-        }
+        default: true,
     },
     teamId: {
-        type: Schema.Types.ObjectId,
-        required() {
-            if (!this.isRootAdmin) return true;
-            return false;
-        }
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Teams',
+            },
+        ],
     }
 }, {
     timestamps: true,
