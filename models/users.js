@@ -37,7 +37,7 @@ const UsersSchema = new Schema({
             return randomFillSync(Buffer.alloc(16)).toString('hex');
         }
     },
-    isNew: {
+    newUser: {
         type: Boolean,
         default: true,
     },
