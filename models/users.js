@@ -10,6 +10,7 @@ const UsersSchema = new Schema({
     },
     familyName: {
         type: String,
+        uppercase: true,
         required() {
             if (this.isRootAdmin) return true;
             return false;
