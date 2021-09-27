@@ -28,6 +28,11 @@ module.exports = {
       1: 'male',
       2: 'non-binary',
     },
+    cardsOrder: {
+      0: 'Recent',
+      1: 'A-Z',
+      2: 'Z-A',
+    },
   },
   front: {
     vueRouterParams: {
