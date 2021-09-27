@@ -24,6 +24,14 @@ const TeamsSchema = new Schema(
             ],
             required: true
         },
+        cards: {
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Cards'
+                }
+            ]
+        },
     },
     {
         timestamps: true,
