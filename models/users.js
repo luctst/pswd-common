@@ -8,6 +8,9 @@ const UsersSchema = new Schema({
     name: {
         type: String,
         required: true,
+        set(value) {
+            return value.replace(value[0], value[0].toUpperCase());
+        }
     },
     familyName: {
         type: String,
@@ -28,8 +31,9 @@ const UsersSchema = new Schema({
             if (this.isRootAdmin) return true;
             return false;
         },
+        lowercase: true,
         unique: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     password: {
         type: String,
