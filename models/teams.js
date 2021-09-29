@@ -5,7 +5,11 @@ const TeamsSchema = new Schema(
     {
         name: {
             type: String,
+            unique: true,
             required: true,
+            set(value) {
+                return value.split(' ').join('-').trim();
+            }
         },
         members: {
             type: [
