@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose');
 const { randomFillSync } = require("crypto");
+const passwordValidator = require('password-validator');
 
 const { common } = require('../macros/index');
 
@@ -32,10 +33,27 @@ const UsersSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required() {
+            return this.mail ? true : false;
+        },
         minlength: 8,
         default() {
             return randomFillSync(Buffer.alloc(16)).toString('hex');
+        },
+        validate: {
+            validator(value) {
+                const schema = new passwordValidator();
+
+                schema
+                .is().min(8)
+                .is().max(100)           
+                .has().uppercase(1)
+                .has().lowercase(1)                  
+                .has().not().spaces()
+
+                return schema.validate(value);
+            },
+            message: () => 'Password must be minimum 8 lengths, 1 uppercase, 1 lowercase characters and no spaces'
         }
     },
     newUser: {
