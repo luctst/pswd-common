@@ -8,6 +8,9 @@ const UsersSchema = new Schema({
     name: {
         type: String,
         required: true,
+        set(value) {
+            return value.replace(value[0], value[0].toUpperCase());
+        }
     },
     familyName: {
         type: String,
@@ -35,8 +38,9 @@ const UsersSchema = new Schema({
             if (this.mail) return true;
             return false;
         },
+        lowercase: true,
         unique: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     password: {
         type: String,
@@ -55,12 +59,13 @@ const UsersSchema = new Schema({
                 .is().min(8)
                 .is().max(100)           
                 .has().uppercase(1)
-                .has().lowercase(1)                  
+                .has().lowercase(1)   
+                .has().digits(1)               
                 .has().not().spaces()
 
                 return schema.validate(value);
             },
-            message: () => 'Password must be minimum 8 lengths, 1 uppercase, 1 lowercase characters and no spaces'
+            message: () => 'Password must be minimum 8 lengths, 1 uppercase, 1 lowercase, 1 digit characters and no spaces'
         }
     },
     newUser: {
