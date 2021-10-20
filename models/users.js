@@ -13,7 +13,7 @@ const UsersSchema = new Schema({
         type: String,
         uppercase: true,
         required() {
-            if (this.isRootAdmin) return true;
+            if (this.mail) return true;
             return false;
         }
     },
@@ -22,10 +22,17 @@ const UsersSchema = new Schema({
         required: true,
         enum: Object.keys(common.gender).map(el => parseInt(el)),
     },
+    age: {
+        type: Number,
+        min: 18,
+        required() {
+            return this.mail ? true : false;
+        }
+    },
     mail: {
         type: String,
         required() {
-            if (this.isRootAdmin) return true;
+            if (this.mail) return true;
             return false;
         },
         unique: true,
